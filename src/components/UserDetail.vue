@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div v-if="profile.user">
-      <p>Full name: {{fiullName}}</p>
-      <p>Email: {{email}}</p>
+      <p>Full name: {{profile.fullName}}</p>
+      <p>Email: {{profile.user.email}}</p>
     </div>
     <div v-if="profile.error">Ooops! An error occurred.</div>
   </div>
@@ -11,20 +11,16 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { State, Action, Getter } from "vuex-class";
-import { ProfileState, User } from "../store/modules/profile/types";
-import { profile } from "../store/modules/profile";
-import { RootState } from "../store/types";
-
-const namespace: string = "profile";
+import { User } from "../store/modules/profile/types";
+import ProfileModule from "../store/modules/profile";
+import { getModule } from "vuex-module-decorators";
 
 @Component
 export default class UserDetail extends Vue {
-  @State("profile") profile!: ProfileState;
-  @Action("fetchData", { namespace }) fetchData!: () => Promise<any>;
-  @Getter("fullName", { namespace }) fullName!: string;
+  profile: ProfileModule = getModule(ProfileModule, this.$store);
 
   async mounted() {
-    await this.fetchData();
+    await this.profile.fetchData();
   }
 }
 </script>

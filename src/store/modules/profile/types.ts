@@ -4,8 +4,3 @@ export interface User {
   email: string;
   phone?: string;
 }
-
-export interface ProfileState {
-  user?: User;
-  error: boolean;
-}
