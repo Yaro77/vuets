@@ -24,3 +24,10 @@ export default class UserDetail extends Vue {
   }
 }
 </script>
+
+<style lang="less">
+@my-color: beige;
+.container {
+  background-color: @my-color;
+}
+</style>
